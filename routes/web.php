@@ -44,7 +44,10 @@ Route::get('/user/delete/{admin}','Day2\AdminController@delete')->name('user.del
 Route::get('/db','Day2\DbController@index');
 
 //资源路由 （文章）
-Route::resource('articles','Day3\ArticleController');
+/*Route::get('/articles/{article}/edit',function(\App\Models\Article $article){
+    dd($article->title);
+});*/
+//Route::resource('articles','Day3\ArticleController');
 
 /*//添加
 Route::get('articles/create','Day3\ArticleController@create')->name('articles.create');
@@ -65,11 +68,63 @@ Route::get('response','Day3\Day3Controller@response');
 //Route::get('response',function(){
 //    return 'world';
 //});
+//Route::get('user/index','Day4\UserController@index');
 
-//注册用户
-Route::get('user/register','Day4\UserController@create');
-Route::get('user/index','Day4\UserController@index')->name('user.index');
+Route::namespace('Day4')->group(function(){
+    Route::prefix('user')->group(function(){
+        //注册用户
+        Route::get('register','UserController@create');
+        Route::get('index','UserController@index')->name('user.index');
+    });
+
 
 //用户登录
-Route::get('login','Day4\SessionController@create')->name('login');
-Route::post('login','Day4\SessionController@store')->name('login');
+    Route::get('login','SessionController@create')->name('login');
+    Route::post('login','SessionController@store')->name('login');
+//注销
+    Route::get('logout','SessionController@destroy')->name('logout');
+});
+
+
+//路由详解
+/*Route::get('route',function(){
+    return ['name'=>'张三'];
+});*/
+// put patch
+//Route::match(['put','patch'],'login','Day4\SessionController@create')->name('login');
+/*Route::any('/',function(){
+    return '首页';
+});*/
+//Route::redirect('/admin/login','/login',301);
+//Route::view('/index','session.create');
+//Route::get('/index/{a}/{b?}',function($x,$y=null){
+//    return $x.$y;
+//})->where('a','\d+');
+//Route::get('/index/{a}/{b}','Day4\UserController@test');
+
+//下面两个路由都需要登录认证
+/*Route::middleware(['auth'])->group(function(){
+    Route::resource('users','UsersController');
+    Route::resource('book','BooksController');
+});*/
+
+//发送邮件
+Route::get('/mail',function(){
+    $name = 'lk';
+    $flag = \Illuminate\Support\Facades\Mail::send('mail',['name'=>$name],function($message){
+        $to = '1256268139@qq.com';
+        $message->to($to)->subject('阿里云数据库10月刊:Redis发布');
+    });
+    dd($flag);
+    /*if($flag){
+        echo '发送邮件成功，请查收！';
+    }else{
+        echo '发送邮件失败，请重试！';
+    }*/
+});
+
+//redis
+Route::get('/redis',function(){
+//    \Illuminate\Support\Facades\Redis::set('name','赵云');
+    return \Illuminate\Support\Facades\Redis::get('name');
+});

@@ -17,7 +17,10 @@
                 <td>@if($article->cover) <img class="img-circle" src="{{ \Illuminate\Support\Facades\Storage::url($article->cover) }}" /> @endif</td>
                 <td>{{ $article->author->username }}({{$article->author->email}})</td>
                 <td>{{ $article->publish_date }}</td>
-                <td><a href="{{ route('articles.edit',[$article]) }}" class="btn btn-warning">修改</a>
+                <td>
+                    @can('update', $article)
+                    <a href="{{ route('articles.edit',[$article]) }}" class="btn btn-warning">修改</a>
+                    @endcan
                     <form method="post" action="{{ route('articles.destroy',[$article]) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

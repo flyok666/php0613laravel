@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Day4;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class UserController extends Controller
 {
@@ -22,6 +24,22 @@ class UserController extends Controller
     //用户首页
     public function index()
     {
-        return '你好xxx,欢迎登录';
+        $route = Route::current();
+        dump($route);//uri 当前路由请求
+
+        $name = Route::currentRouteName();
+        dump($name);
+        $action = Route::currentRouteAction();
+        dump($action);
+
+        //获取已登录用户的信息
+        $user = Auth::user();
+
+        return view('session.index',['user'=>$user]);
+    }
+
+    public function test($x,$y)
+    {
+        return $x.$y;
     }
 }

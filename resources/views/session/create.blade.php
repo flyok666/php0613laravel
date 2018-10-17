@@ -12,6 +12,11 @@
             <label>密码</label>
             <input type="text" name="password" class="form-control" value="{{ old('password') }}">
         </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="remember" value="1" @if(old('remember')) checked="checked" @endif> 记住我
+            </label>
+        </div>
         {{ csrf_field() }}
         <button class="btn btn-primary btn-block">登录</button>
     </form>
