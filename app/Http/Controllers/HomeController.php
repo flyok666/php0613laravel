@@ -6,14 +6,23 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    //
-    public function index(){
-        //echo '首页';
-        return '首页';
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-    public function about()
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return '关于';
+        return view('home');
     }
 }

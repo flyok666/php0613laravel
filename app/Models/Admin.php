@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
-class Admin extends Model
+class Admin extends User
 {
-    //
-    protected $fillable = ['username','email','tel'];
+    use Notifiable;
 
-    //获取该用户的所有文章   1对多
-    public function articles()
-    {
-        return $this->hasMany(Article::class,'author_id','id');
-    }
+    //必须要设置才可以正常赋值
+    protected $fillable = ['username','email','password','sex'];
 }

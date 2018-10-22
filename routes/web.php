@@ -128,3 +128,15 @@ Route::get('/redis',function(){
 //    \Illuminate\Support\Facades\Redis::set('name','赵云');
     return \Illuminate\Support\Facades\Redis::get('name');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+//管理员
+Route::get('admins/login','Lianxi\AdminController@login')->name('admins.login');
+Route::post('admins/login','Lianxi\AdminController@check')->name('admins.login');
+Route::get('admins/logout','Lianxi\AdminController@logout')->name('admins.logout');
+
+Route::resource('admins','Lianxi\AdminController');
